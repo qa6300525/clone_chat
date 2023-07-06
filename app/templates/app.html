@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验样式</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<!--  <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/marked-highlight/lib/index.umd.js"></script>-->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+        html, body {
+            height: 100%;
+        }
+        #display-window {
+            height: calc(100% - 112px);
+            overflow-y: scroll;
+        }
+        .message {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">样式测试</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">角色扮演</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">编程助手</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">情感专家</a>
+      </li>
+    </ul>
+    <div class="navbar-text">
+      {% if current_user.is_authenticated %}
+      {{ current_user.email }} 剩余次数: {{ current_user.remaining_count }}
+      <a href="{{ url_for('auth.logout') }}">登出</a>
+      {% else %}
+      请登录 <a href="{{ url_for('auth.login') }}">登录</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Rich text display window -->
+<!-- Rich text display window -->
+<div class="container mt-4 flex-grow-1">
+  <div class="card h-100">
+    <div class="card-body" id="display-window">
+      <!-- Text, code, LaTeX formulas, etc. will be displayed here -->
+      <div class="message text-right">
+        <div class="d-flex align-items-start justify-content-end">
+        <div class="bg-primary text-white p-3 rounded">
+          从1加到10，请用LaTeX格式展示.
+        </div>
+        <img src="https://plus.unsplash.com/premium_photo-1683865775631-3283bfaf6508?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="User Avatar" width="40" height="40" class="rounded-circle ml-2">
+      </div>
+        </div>
+      <div class="message">
+        <div class="d-flex align-items-start">
+        <img src="https://plus.unsplash.com/premium_photo-1683690944936-18103fa341dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1100&q=80" alt="Model Avatar" width="40" height="40" class="rounded-circle mr-2">
+        <div class="bg-light p-3 rounded">
+          Sure, the sum of an arithmetic series can be found with the formula:
+          <br>
+          <!-- Note: In reality, you would use a library like MathJax to render this formula. -->
+          \( S = \frac{n}{2}(a + l) \)
+          <br>
+          Where:
+          <br>
+          \( n \) is the number of terms (10 in this case),
+          <br>
+          \( a \) is the first term (1 in this case),
+          <br>
+          \( l \) is the last term (10 in this case).
+        </div>
+      </div>
+      </div>
+
+      <div class="message text-right">
+        <div class="d-flex align-items-start justify-content-end">
+
+        <div class="bg-primary text-white p-3 rounded">
+          用python编写一个函数，实现从1到10.
+        </div>
+        <img src="https://plus.unsplash.com/premium_photo-1683865775631-3283bfaf6508?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="User Avatar" width="40" height="40" class="rounded-circle ml-2">
+      </div>
+        </div>
+      <div class="message">
+        <div class="d-flex align-items-start">
+
+        <img src="https://plus.unsplash.com/premium_photo-1683690944936-18103fa341dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1100&q=80" alt="Model Avatar" width="40" height="40" class="rounded-circle mr-2">
+        <div class="bg-light p-3 rounded">
+          <!-- Code block -->
+          <pre><code class="language-python">
+def sum_from_1_to_n(n):
+    return (n / 2) * (1 + n)
+
+print(sum_from_1_to_n(10))
+          </code></pre>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Input field and Send button -->
+<div class="container mt-4">
+  <div class="input-group">
+    <input type="text" class="form-control" id="user-input" placeholder="Type a message...">
+    <!-- Send button -->
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" id="send-button" type="button">Send</button>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='chat_box.js') }}"></script>
+<script src="{{ url_for('static', filename='send.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    hljs.highlightAll();
+});
+
+
+</script>
+</body>
+</html>
